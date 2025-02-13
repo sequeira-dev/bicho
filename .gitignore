@@ -3,3 +3,4 @@
 *.dproj.local
 *.res
 *.identcache
+*.json
