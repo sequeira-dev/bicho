@@ -24,6 +24,7 @@ type
     procedure BtnAdicionarClick(Sender: TObject);
     procedure btnSalvarClick(Sender: TObject);
     procedure btnCarregarClick(Sender: TObject);
+    procedure FormDestroy(Sender: TObject);
 
   private
     procedure ConfigurarMemTable;
@@ -56,13 +57,14 @@ end;
 
 procedure TfrmPrincipal.btnCarregarClick(Sender: TObject);
 begin
- CarregarJSON(JSON_FILE);
+//MOVIDO PARA O CREATE
+// CarregarJSON(JSON_FILE);
 end;
 
 procedure TfrmPrincipal.btnSalvarClick(Sender: TObject);
-
 begin
-  SalvarJSON(JSON_FILE);
+//MOVIDO PARA O DESTROY
+//  SalvarJSON(JSON_FILE);
 end;
 
 procedure TfrmPrincipal.CarregarJSON(const FileName: string);
@@ -82,7 +84,7 @@ begin
   finally
     JSONStream.Free;
   end;
-  ShowMessage('Dados carregados do JSON com sucesso!');
+ // ShowMessage('Dados carregados do JSON com sucesso!');
 end;
 
 procedure TfrmPrincipal.ConfigurarMemTable;
@@ -101,6 +103,12 @@ end;
 procedure TfrmPrincipal.FormCreate(Sender: TObject);
 begin
   ConfigurarMemTable;
+  CarregarJSON(JSON_FILE);
+end;
+
+procedure TfrmPrincipal.FormDestroy(Sender: TObject);
+begin
+  SalvarJSON(JSON_FILE);
 end;
 
 procedure TfrmPrincipal.SalvarJSON(const FileName: string);
@@ -113,7 +121,7 @@ begin
   finally
     JSONStream.Free;
   end;
-  ShowMessage('Dados salvos em JSON com sucesso!');
+//  ShowMessage('Dados salvos em JSON com sucesso!');
 end;
 
 end.

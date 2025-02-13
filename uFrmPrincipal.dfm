@@ -12,6 +12,7 @@ object frmPrincipal: TfrmPrincipal
   Font.Name = 'Segoe UI'
   Font.Style = []
   OnCreate = FormCreate
+  OnDestroy = FormDestroy
   TextHeight = 15
   object Panel1: TPanel
     Left = 0
@@ -20,7 +21,6 @@ object frmPrincipal: TfrmPrincipal
     Height = 41
     Align = alTop
     TabOrder = 0
-    ExplicitWidth = 509
     object BtnAdicionar: TButton
       Left = 252
       Top = 11
@@ -37,6 +37,7 @@ object frmPrincipal: TfrmPrincipal
       Height = 25
       Caption = 'Salvar em arquivo'
       TabOrder = 1
+      Visible = False
       OnClick = btnSalvarClick
     end
     object btnCarregar: TButton
@@ -46,6 +47,7 @@ object frmPrincipal: TfrmPrincipal
       Height = 25
       Caption = 'Carregar arquivo'
       TabOrder = 2
+      Visible = False
       OnClick = btnCarregarClick
     end
     object EditNome: TEdit
