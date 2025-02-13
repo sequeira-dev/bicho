@@ -19,10 +19,9 @@ type
     btnCarregar: TButton;
     EditNome: TEdit;
     DatePickerNascimento: TDateTimePicker;
-    FDStanStorageJSONLink1: TFDStanStorageJSONLink;
     procedure FormCreate(Sender: TObject);
     procedure BtnAdicionarClick(Sender: TObject);
-    procedure btnSalvarClick(Sender: TObject);
+    procedure btnSalvarClick(const FileName: string);
     procedure btnCarregarClick(Sender: TObject);
 
   private
@@ -59,10 +58,17 @@ begin
  CarregarJSON(JSON_FILE);
 end;
 
-procedure TfrmPrincipal.btnSalvarClick(Sender: TObject);
-
+procedure TfrmPrincipal.btnSalvarClick(const FileName: string);
+var
+  JSONStream: TFileStream;
 begin
-  SalvarJSON(JSON_FILE);
+  JSONStream := TFileStream.Create(FileName, fmCreate);
+  try
+    FDMemTable1.SaveToStream(JSONStream, sfJSON);
+  finally
+    JSONStream.Free;
+  end;
+  ShowMessage('Dados salvos em JSON com sucesso!');
 end;
 
 procedure TfrmPrincipal.CarregarJSON(const FileName: string);
@@ -104,16 +110,8 @@ begin
 end;
 
 procedure TfrmPrincipal.SalvarJSON(const FileName: string);
-var
-  JSONStream: TFileStream;
 begin
-  JSONStream := TFileStream.Create(FileName, fmCreate);
-  try
-    FDMemTable1.SaveToStream(JSONStream, sfJSON);
-  finally
-    JSONStream.Free;
-  end;
-  ShowMessage('Dados salvos em JSON com sucesso!');
+  SalvarJSON(JSON_FILE);
 end;
 
 end.

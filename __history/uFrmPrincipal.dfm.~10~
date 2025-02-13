@@ -4,7 +4,7 @@ object frmPrincipal: TfrmPrincipal
   BorderIcons = [biSystemMenu, biMinimize]
   Caption = 'frmPrincipal'
   ClientHeight = 380
-  ClientWidth = 937
+  ClientWidth = 511
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -16,48 +16,47 @@ object frmPrincipal: TfrmPrincipal
   object Panel1: TPanel
     Left = 0
     Top = 0
-    Width = 937
+    Width = 511
     Height = 41
     Align = alTop
     TabOrder = 0
-    ExplicitWidth = 509
+    ExplicitTop = -6
     object BtnAdicionar: TButton
-      Left = 252
-      Top = 11
-      Width = 125
+      Left = 0
+      Top = 10
+      Width = 75
       Height = 25
-      Caption = 'Salvar registro'
+      Caption = 'Adicionar'
       TabOrder = 0
       OnClick = BtnAdicionarClick
     end
     object btnSalvar: TButton
-      Left = 657
+      Left = 81
       Top = 10
-      Width = 128
+      Width = 75
       Height = 25
-      Caption = 'Salvar em arquivo'
+      Caption = 'Salvar'
       TabOrder = 1
-      OnClick = btnSalvarClick
     end
     object btnCarregar: TButton
-      Left = 791
+      Left = 162
       Top = 10
-      Width = 126
+      Width = 75
       Height = 25
-      Caption = 'Carregar arquivo'
+      Caption = 'Carregar'
       TabOrder = 2
       OnClick = btnCarregarClick
     end
     object EditNome: TEdit
-      Left = 11
-      Top = 12
+      Left = 243
+      Top = 11
       Width = 121
       Height = 23
       TabOrder = 3
     end
     object DatePickerNascimento: TDateTimePicker
-      Left = 138
-      Top = 13
+      Left = 370
+      Top = 12
       Width = 108
       Height = 23
       Date = 45700.000000000000000000
@@ -68,10 +67,9 @@ object frmPrincipal: TfrmPrincipal
   object DBGrid1: TDBGrid
     Left = 0
     Top = 41
-    Width = 937
+    Width = 511
     Height = 339
     Align = alClient
-    DataSource = dsPrincipalGrupo
     TabOrder = 1
     TitleFont.Charset = DEFAULT_CHARSET
     TitleFont.Color = clWindowText
@@ -94,9 +92,5 @@ object frmPrincipal: TfrmPrincipal
     DataSet = FDMemTable1
     Left = 328
     Top = 64
-  end
-  object FDStanStorageJSONLink1: TFDStanStorageJSONLink
-    Left = 200
-    Top = 168
   end
 end

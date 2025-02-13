@@ -62,7 +62,7 @@ end;
 procedure TfrmPrincipal.btnSalvarClick(Sender: TObject);
 
 begin
-  SalvarJSON(JSON_FILE);
+  SalvarJSON(FileName);
 end;
 
 procedure TfrmPrincipal.CarregarJSON(const FileName: string);

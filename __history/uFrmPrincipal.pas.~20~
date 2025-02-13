@@ -59,10 +59,10 @@ begin
  CarregarJSON(JSON_FILE);
 end;
 
-procedure TfrmPrincipal.btnSalvarClick(Sender: TObject);
+procedure TfrmPrincipal.btnSalvarClick(const FileName: string);
 
 begin
-  SalvarJSON(JSON_FILE);
+  SalvarJSON(FileName);
 end;
 
 procedure TfrmPrincipal.CarregarJSON(const FileName: string);
