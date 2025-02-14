@@ -12,32 +12,17 @@ uses
 
 type
   TfrmPrincipal = class(TForm)
-    FDMemTable1: TFDMemTable;
-    dsPrincipalGrupo: TDataSource;
     Panel1: TPanel;
-    BtnAdicionar: TButton;
-    btnSalvar: TButton;
-    btnCarregar: TButton;
-    EditNome: TEdit;
-    DatePickerNascimento: TDateTimePicker;
-    FDStanStorageJSONLink1: TFDStanStorageJSONLink;
     PageControl1: TPageControl;
     TabSheet1: TTabSheet;
     DBGrid1: TDBGrid;
     TabSheet2: TTabSheet;
-    BitBtn1: TBitBtn;
+    btnImportarResultadosAPI: TBitBtn;
     Memo1: TMemo;
-    FDConnection: TFDConnection;
-    FDPhysPgDriverLink1: TFDPhysPgDriverLink;
-    procedure FormCreate(Sender: TObject);
-    procedure BtnAdicionarClick(Sender: TObject);
-    procedure btnSalvarClick(Sender: TObject);
-    procedure btnCarregarClick(Sender: TObject);
+    procedure btnImportarResultadosAPIClick(Sender: TObject);
 
   private
-    procedure ConfigurarMemTable;
-    procedure SalvarJSON(const FileName: string);
-    procedure CarregarJSON(const FileName: string);
+
   public
     { Public declarations }
   end;
@@ -49,80 +34,126 @@ implementation
 
 {$R *.dfm}
 
-const
-  JSON_FILE = 'dados.json';
+uses uUtilBanco;
 
 { TfrmPrincipal }
-
-procedure TfrmPrincipal.BtnAdicionarClick(Sender: TObject);
-begin
-  FDMemTable1.Append;
-  FDMemTable1.FieldByName('ID').AsInteger := FDMemTable1.RecordCount + 1;
-  FDMemTable1.FieldByName('Nome').AsString := EditNome.Text;
-  FDMemTable1.FieldByName('DataNascimento').AsDateTime := DatePickerNascimento.Date;
-  FDMemTable1.Post;
-end;
-
-procedure TfrmPrincipal.btnCarregarClick(Sender: TObject);
-begin
- CarregarJSON(JSON_FILE);
-end;
-
-procedure TfrmPrincipal.btnSalvarClick(Sender: TObject);
-
-begin
-  SalvarJSON(JSON_FILE);
-end;
-
-procedure TfrmPrincipal.CarregarJSON(const FileName: string);
+procedure TfrmPrincipal.btnImportarResultadosAPIClick(Sender: TObject);
 var
-  JSONStream: TFileStream;
-begin
-  if not FileExists(FileName) then
-  begin
-    ShowMessage('Arquivo JSON não encontrado!');
-    Exit;
-  end;
+  RESTClient: TRESTClient;
+  RESTRequest: TRESTRequest;
+  RESTResponse: TRESTResponse;
+  JSONEnvio: TJSONObject;
+  RetornoJSON: TJSONObject;
+  DrawObj, PreviousDrawObj: TJSONObject;
+  RetornoTexto: string;
 
-  JSONStream := TFileStream.Create(FileName, fmOpenRead);
+  DrawsArray, PreviousDrawsArray, RaffledPopArray: TJSONArray;
+  I, J, K, vPremio1, vPremio2, vPremio3, vPremio4, vPremio5,
+  vGrupo1, vGrupo2, vGrupo3, vGrupo4, vGrupo5: Integer;
+begin
   try
-    FDMemTable1.LoadFromStream(JSONStream, sfJSON);
-    FDMemTable1.Open;
-  finally
-    JSONStream.Free;
+    // Criando os objetos REST
+    RESTClient := TRESTClient.Create('https://www.akyloterias.com/web/lotericos/svc/resultados/loterias');
+    RESTRequest := TRESTRequest.Create(nil);
+    RESTResponse := TRESTResponse.Create(nil);
+
+    // Configurando o Request
+    RESTRequest.Client := RESTClient;
+    RESTRequest.Response := RESTResponse;
+    RESTRequest.Method := rmPOST;
+
+    // Criando JSON de envio
+    JSONEnvio := TJSONObject.Create;
+    JSONEnvio.AddPair('strData', '2025-02-13');
+
+    // Adicionando JSON ao Body
+    RESTRequest.AddBody(JSONEnvio.ToJSON, TRESTContentType.ctAPPLICATION_JSON);
+
+    // Executando a requisição
+    RESTRequest.Execute;
+
+    // Pegando o retorno da API
+    RetornoTexto := RESTResponse.Content;  // Retorno como string
+
+    // Convertendo para um objeto JSON
+    RetornoJSON := TJSONObject.ParseJSONValue(RetornoTexto) as TJSONObject;
+    if Assigned(RetornoJSON) then
+    begin
+
+      // Pegar a lista de "draws"
+      DrawsArray := RetornoJSON.GetValue<TJSONArray>('draws');
+      if not Assigned(DrawsArray) then
+        Exit;
+
+    for I := 0 to DrawsArray.Count - 1 do
+      begin
+        DrawObj := DrawsArray.Items[I] as TJSONObject;
+
+        // Pegar a lista de "previousDraws"
+        PreviousDrawsArray := DrawObj.GetValue<TJSONArray>('previousDraws');
+        if not Assigned(PreviousDrawsArray) then
+          Continue;
+
+        // Percorrer "previousDraws"
+        for J := 0 to PreviousDrawsArray.Count - 1 do
+        begin
+          PreviousDrawObj := PreviousDrawsArray.Items[J] as TJSONObject;
+
+
+
+                                // Obter array "raffledPop"
+          RaffledPopArray := PreviousDrawObj.GetValue<TJSONArray>('raffledPop');
+          if Assigned(RaffledPopArray) then
+          begin
+            Memo1.Lines.Add( 'raffledPop:' );
+            for K := 0 to RaffledPopArray.Count - 1 do
+            begin
+
+              case K of
+                0: begin
+                    vPremio1 := StrToInt(copy(RaffledPopArray.Items[K].Value,1,4));
+                    vGrupo1 := StrToInt(copy(RaffledPopArray.Items[K].Value,6,2));
+                  end;
+                1: begin
+                    vPremio2 := StrToInt(copy(RaffledPopArray.Items[K].Value,1,4));
+                    vGrupo2 := StrToInt(copy(RaffledPopArray.Items[K].Value,6,2));
+                  end;
+                2: begin
+                    vPremio3 := StrToInt(copy(RaffledPopArray.Items[K].Value,1,4));
+                    vGrupo3 := StrToInt(copy(RaffledPopArray.Items[K].Value,6,2));
+                  end;
+                3: begin
+                    vPremio4 := StrToInt(copy(RaffledPopArray.Items[K].Value,1,4));
+                    vGrupo4 := StrToInt(copy(RaffledPopArray.Items[K].Value,6,2));
+                  end;
+                4: begin
+                    vPremio5 := StrToInt(copy(RaffledPopArray.Items[K].Value,1,4));
+                    vGrupo5 := StrToInt(copy(RaffledPopArray.Items[K].Value,6,2));
+                  end;
+              end;
+            end;
+          end;
+
+          uUtilBanco.incluirJogo(
+            PreviousDrawObj.GetValue<TDateTime>('timestamp'),
+            PreviousDrawObj.GetValue<string>('raffledDescription'),
+            vPremio1,vPremio2,vPremio3,vPremio4,vPremio5,
+            vGrupo1,vGrupo2,vGrupo3,vGrupo4,vGrupo5, 1);
+
+        end;
+      end;
+      RetornoJSON.Free;
+    end;
+  except
+    on E: Exception do
+    raise Exception.Create('Erro ao tentar importar. '+e.Message);
   end;
-  ShowMessage('Dados carregados do JSON com sucesso!');
-end;
 
-procedure TfrmPrincipal.ConfigurarMemTable;
-begin
-  FDMemTable1.Close;
-  FDMemTable1.FieldDefs.Clear;
-
-  FDMemTable1.FieldDefs.Add('ID', ftInteger);
-  FDMemTable1.FieldDefs.Add('Nome', ftString, 100);
-  FDMemTable1.FieldDefs.Add('DataNascimento', ftDateTime);
-
-  FDMemTable1.CreateDataSet;
-  FDMemTable1.Open;
-end;
-
-procedure TfrmPrincipal.FormCreate(Sender: TObject);
-begin
-  ConfigurarMemTable;
-end;
-
-procedure TfrmPrincipal.SalvarJSON(const FileName: string);
-var
-  JSONStream: TFileStream;
-begin
-  JSONStream := TFileStream.Create(FileName, fmCreate);
-  try
-    FDMemTable1.SaveToStream(JSONStream, sfJSON);
-  finally
-    JSONStream.Free;
-  end;
-  ShowMessage('Dados salvos em JSON com sucesso!');
+  // Liberando memória
+  JSONEnvio.Free;
+  RESTRequest.Free;
+  RESTResponse.Free;
+  RESTClient.Free;
 end;
 
 end.
