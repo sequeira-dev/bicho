@@ -12,7 +12,6 @@ object frmPrincipal: TfrmPrincipal
   Font.Name = 'Segoe UI'
   Font.Style = []
   OnCreate = FormCreate
-  OnDestroy = FormDestroy
   TextHeight = 15
   object Panel1: TPanel
     Left = 0
@@ -21,10 +20,7 @@ object frmPrincipal: TfrmPrincipal
     Height = 41
     Align = alTop
     TabOrder = 0
-<<<<<<< HEAD
     ExplicitWidth = 935
-=======
->>>>>>> 29eba158b01d9505d1b1d51666a38dfc1960f0a1
     object BtnAdicionar: TButton
       Left = 252
       Top = 11
@@ -41,7 +37,6 @@ object frmPrincipal: TfrmPrincipal
       Height = 25
       Caption = 'Salvar em arquivo'
       TabOrder = 1
-      Visible = False
       OnClick = btnSalvarClick
     end
     object btnCarregar: TButton
@@ -51,7 +46,6 @@ object frmPrincipal: TfrmPrincipal
       Height = 25
       Caption = 'Carregar arquivo'
       TabOrder = 2
-      Visible = False
       OnClick = btnCarregarClick
     end
     object EditNome: TEdit
@@ -146,8 +140,8 @@ object frmPrincipal: TfrmPrincipal
       'Port=5433'
       'DriverID=PG')
     LoginPrompt = False
-    Left = 476
-    Top = 83
+    Left = 516
+    Top = 75
   end
   object FDPhysPgDriverLink1: TFDPhysPgDriverLink
     VendorLib = 'C:\Program Files (x86)\PostgreSQL\psqlODBC\bin\libpq.dll'
