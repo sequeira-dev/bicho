@@ -98,14 +98,17 @@ begin
         for J := 0 to PreviousDrawsArray.Count - 1 do
         begin
           PreviousDrawObj := PreviousDrawsArray.Items[J] as TJSONObject;
-          // Obter array "raffledPop"
-          RaffledPopArray := PreviousDrawObj.GetValue<TJSONArray>('raffledPop');
 
+
+
+                                // Obter array "raffledPop"
+          RaffledPopArray := PreviousDrawObj.GetValue<TJSONArray>('raffledPop');
           if Assigned(RaffledPopArray) then
           begin
-
+            Memo1.Lines.Add( 'raffledPop:' );
             for K := 0 to RaffledPopArray.Count - 1 do
             begin
+
               case K of
                 0: begin
                     vPremio1 := StrToInt(copy(RaffledPopArray.Items[K].Value,1,4));
