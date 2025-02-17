@@ -1,0 +1,1 @@
+ALTER TABLE IF EXISTS public.jogo DROP COLUMN IF EXISTS tipo_jogo;

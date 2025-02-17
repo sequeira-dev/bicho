@@ -4,8 +4,7 @@ interface
 
 procedure incluirJogo(pData: TDateTime; pDescricao: String;
 pPremio1: Integer; pPremio2: Integer; pPremio3: Integer; pPremio4: Integer; pPremio5: Integer;
-pGrupo1: Integer; pGrupo2: Integer; pGrupo3: Integer; pGrupo4: Integer; pGrupo5: Integer;
- pTipoJogo: Integer);
+pGrupo1: Integer; pGrupo2: Integer; pGrupo3: Integer; pGrupo4: Integer; pGrupo5: Integer);
 
 implementation
 
@@ -14,19 +13,17 @@ uses
 
 procedure incluirJogo(pData: TDateTime; pDescricao: String;
 pPremio1: Integer; pPremio2: Integer; pPremio3: Integer; pPremio4: Integer; pPremio5: Integer;
-pGrupo1: Integer; pGrupo2: Integer; pGrupo3: Integer; pGrupo4: Integer; pGrupo5: Integer;
- pTipoJogo: Integer);
+pGrupo1: Integer; pGrupo2: Integer; pGrupo3: Integer; pGrupo4: Integer; pGrupo5: Integer);
 begin
 
   with dmPrincipal do
   begin
     FDQuery.SQL.Text :=
         ' INSERT INTO public.jogo(                                                                           '+
-        ' 	data, tipo_jogo, descricao, premio1, premio2, premio3, premio4, premio5, grupo1, grupo2, grupo3, grupo4, grupo5)      '+
-        ' 	VALUES (:data, :tipo_jogo, :descricao, :premio1, :premio2, :premio3, :premio4, :premio5, :grupo1, :grupo2, :grupo3, :grupo4, :grupo5) ';
+        ' 	data, descricao, premio1, premio2, premio3, premio4, premio5, grupo1, grupo2, grupo3, grupo4, grupo5)      '+
+        ' 	VALUES (:data, :descricao, :premio1, :premio2, :premio3, :premio4, :premio5, :grupo1, :grupo2, :grupo3, :grupo4, :grupo5) ';
 
     FDQuery.ParamByName('data').AsDateTime := pData;
-    FDQuery.ParamByName('tipo_jogo').AsInteger := pTipoJogo;
     FDQuery.ParamByName('descricao').AsString := pDescricao;
     FDQuery.ParamByName('premio1').AsInteger := pPremio1;
     FDQuery.ParamByName('premio2').AsInteger := pPremio2;

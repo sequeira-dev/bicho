@@ -50,6 +50,9 @@ var
   DrawsArray, PreviousDrawsArray, RaffledPopArray: TJSONArray;
   I, J, K, vPremio1, vPremio2, vPremio3, vPremio4, vPremio5,
   vGrupo1, vGrupo2, vGrupo3, vGrupo4, vGrupo5: Integer;
+
+  FormatSettings: TFormatSettings;
+
 begin
   try
     // Criando os objetos REST
@@ -131,11 +134,15 @@ begin
             end;
           end;
 
+          FormatSettings := TFormatSettings.Create;
+          FormatSettings.DateSeparator := '-';
+          FormatSettings.ShortDateFormat := 'yyyy-mm-dd';
+
           uUtilBanco.incluirJogo(
-            PreviousDrawObj.GetValue<TDateTime>('timestamp'),
+            StrToDateTime(PreviousDrawObj.GetValue<string>('timestamp'), FormatSettings),
             PreviousDrawObj.GetValue<string>('raffledDescription'),
             vPremio1,vPremio2,vPremio3,vPremio4,vPremio5,
-            vGrupo1,vGrupo2,vGrupo3,vGrupo4,vGrupo5, 1);
+            vGrupo1,vGrupo2,vGrupo3,vGrupo4,vGrupo5);
 
         end;
       end;

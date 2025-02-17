@@ -1,8 +1,7 @@
 object dmPrincipal: TdmPrincipal
   OnCreate = DataModuleCreate
-  Height = 750
-  Width = 1000
-  PixelsPerInch = 120
+  Height = 600
+  Width = 800
   object FDConnection: TFDConnection
     Params.Strings = (
       'Database=bicho'
@@ -11,17 +10,17 @@ object dmPrincipal: TdmPrincipal
       'Port=5433'
       'DriverID=PG')
     LoginPrompt = False
-    Left = 108
-    Top = 67
+    Left = 86
+    Top = 54
   end
   object FDPhysPgDriverLink1: TFDPhysPgDriverLink
     VendorLib = 'C:\Program Files (x86)\PostgreSQL\psqlODBC\bin\libpq.dll'
-    Left = 276
-    Top = 59
+    Left = 221
+    Top = 47
   end
   object FDQuery: TFDQuery
     Connection = FDConnection
-    Left = 208
-    Top = 152
+    Left = 166
+    Top = 122
   end
 end
