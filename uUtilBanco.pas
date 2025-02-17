@@ -2,25 +2,23 @@ unit uUtilBanco;
 
 interface
 
-procedure incluirJogo(pData: TDateTime; pDescricao: String;
-pPremio1: Integer; pPremio2: Integer; pPremio3: Integer; pPremio4: Integer; pPremio5: Integer;
-pGrupo1: Integer; pGrupo2: Integer; pGrupo3: Integer; pGrupo4: Integer; pGrupo5: Integer);
+procedure incluirJogo(pData: TDateTime; pDescricao: String; pPremio1: Integer; pPremio2: Integer; pPremio3: Integer; pPremio4: Integer; pPremio5: Integer;
+                      pGrupo1: Integer; pGrupo2: Integer; pGrupo3: Integer; pGrupo4: Integer; pGrupo5: Integer);
 
 implementation
 
 uses
   FireDAC.Comp.Client, uDmPrincipal, System.SysUtils;
 
-procedure incluirJogo(pData: TDateTime; pDescricao: String;
-pPremio1: Integer; pPremio2: Integer; pPremio3: Integer; pPremio4: Integer; pPremio5: Integer;
-pGrupo1: Integer; pGrupo2: Integer; pGrupo3: Integer; pGrupo4: Integer; pGrupo5: Integer);
+procedure incluirJogo(pData: TDateTime; pDescricao: String; pPremio1: Integer; pPremio2: Integer; pPremio3: Integer; pPremio4: Integer; pPremio5: Integer;
+                      pGrupo1: Integer; pGrupo2: Integer; pGrupo3: Integer; pGrupo4: Integer; pGrupo5: Integer);
 begin
 
   with dmPrincipal do
   begin
     FDQuery.SQL.Text :=
-        ' INSERT INTO public.jogo(                                                                           '+
-        ' 	data, descricao, premio1, premio2, premio3, premio4, premio5, grupo1, grupo2, grupo3, grupo4, grupo5)      '+
+        ' INSERT INTO public.resultado(                                                                                               '+
+        ' 	data, descricao, premio1, premio2, premio3, premio4, premio5, grupo1, grupo2, grupo3, grupo4, grupo5)                     '+
         ' 	VALUES (:data, :descricao, :premio1, :premio2, :premio3, :premio4, :premio5, :grupo1, :grupo2, :grupo3, :grupo4, :grupo5) ';
 
     FDQuery.ParamByName('data').AsDateTime := pData;
