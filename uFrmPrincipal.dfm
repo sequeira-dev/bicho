@@ -65,6 +65,15 @@ object frmPrincipal: TfrmPrincipal
           'Memo1')
         TabOrder = 1
       end
+      object DataInicio: TDateTimePicker
+        Left = 584
+        Top = 32
+        Width = 105
+        Height = 23
+        Date = 45661.000000000000000000
+        Time = 0.581977870373521000
+        TabOrder = 2
+      end
     end
   end
 end
