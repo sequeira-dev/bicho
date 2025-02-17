@@ -2,7 +2,7 @@ unit uUtilBanco;
 
 interface
 
-procedure incluirJogo(pData: TDateTime; pDescricao: String; pPremio1: Integer; pPremio2: Integer; pPremio3: Integer; pPremio4: Integer; pPremio5: Integer;
+procedure incluirResultado(pData: TDateTime; pDescricao: String; pPremio1: Integer; pPremio2: Integer; pPremio3: Integer; pPremio4: Integer; pPremio5: Integer;
                       pGrupo1: Integer; pGrupo2: Integer; pGrupo3: Integer; pGrupo4: Integer; pGrupo5: Integer);
 
 implementation
@@ -10,10 +10,9 @@ implementation
 uses
   FireDAC.Comp.Client, uDmPrincipal, System.SysUtils, FireDAC.Stan.Param;
 
-procedure incluirJogo(pData: TDateTime; pDescricao: String; pPremio1: Integer; pPremio2: Integer; pPremio3: Integer; pPremio4: Integer; pPremio5: Integer;
+procedure incluirResultado(pData: TDateTime; pDescricao: String; pPremio1: Integer; pPremio2: Integer; pPremio3: Integer; pPremio4: Integer; pPremio5: Integer;
                       pGrupo1: Integer; pGrupo2: Integer; pGrupo3: Integer; pGrupo4: Integer; pGrupo5: Integer);
 begin
-
   with dmPrincipal do
   begin
     FDQuery.SQL.Text :=
