@@ -19,7 +19,6 @@ object frmPrincipal: TfrmPrincipal
     Height = 41
     Align = alTop
     TabOrder = 0
-    ExplicitWidth = 935
   end
   object PageControl1: TPageControl
     Left = 0
