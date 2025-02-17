@@ -8,7 +8,7 @@ procedure incluirJogo(pData: TDateTime; pDescricao: String; pPremio1: Integer; p
 implementation
 
 uses
-  FireDAC.Comp.Client, uDmPrincipal, System.SysUtils;
+  FireDAC.Comp.Client, uDmPrincipal, System.SysUtils, FireDAC.Stan.Param;
 
 procedure incluirJogo(pData: TDateTime; pDescricao: String; pPremio1: Integer; pPremio2: Integer; pPremio3: Integer; pPremio4: Integer; pPremio5: Integer;
                       pGrupo1: Integer; pGrupo2: Integer; pGrupo3: Integer; pGrupo4: Integer; pGrupo5: Integer);
