@@ -60,11 +60,8 @@ var
   I, J, K, vPremio1, vPremio2, vPremio3, vPremio4, vPremio5, vGrupo1, vGrupo2, vGrupo3, vGrupo4, vGrupo5: Integer;
   vFormatSettings: TFormatSettings;
   vDataInicio: TDateTime;
-
-
-  DataInicio: TDate;
-  TotalDias, DiasPassados: Integer;
-  Progresso: Double;
+  vTotalDias, DiasPassados: Integer;
+  vProgresso: Double;
 begin
 
   vPremio1 := 0;
@@ -144,7 +141,7 @@ begin
           begin
 
             // Calcula o número total de dias do período
-            TotalDias := DaysBetween(pDataInicio, Now);
+            vTotalDias := DaysBetween(pDataInicio, Now);
 
             // Pegar a lista de "draws"
             vDrawsArray := vRetornoJSON.GetValue<TJSONArray>('draws');
@@ -210,13 +207,13 @@ begin
                   DiasPassados := 0;
 
                 // Calcula a porcentagem do tempo decorrido
-                if TotalDias > 0 then
-                  Progresso := ((((DiasPassados / TotalDias) * 100) - 100) * -1)
+                if vTotalDias > 0 then
+                  vProgresso := ((((DiasPassados / vTotalDias) * 100) - 100) * -1)
                 else
-                  Progresso := 0;
+                  vProgresso := 0;
 
                 // Atualiza o TGauge
-                pGaugeRef.Progress := Round(Progresso);
+                pGaugeRef.Progress := Round(vProgresso);
 
                 pMemoRef.Lines.Add('Data: '+vPreviousDrawObj.GetValue<string>('timestamp') + ' - ' +  vPreviousDrawObj.GetValue<string>('raffledDescription'));
                 pMemoRef.Lines.Add('1º Premio: '+ IntToStr(vPremio1) +' - '+IntToStr(vGrupo1) );

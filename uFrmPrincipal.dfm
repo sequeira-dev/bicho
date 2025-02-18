@@ -4,18 +4,19 @@ object frmPrincipal: TfrmPrincipal
   BorderIcons = [biSystemMenu, biMinimize]
   Caption = 'frmPrincipal'
   ClientHeight = 380
-  ClientWidth = 774
+  ClientWidth = 508
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
   Font.Height = -12
   Font.Name = 'Segoe UI'
   Font.Style = []
+  Position = poScreenCenter
   TextHeight = 15
   object Panel1: TPanel
     Left = 0
     Top = 0
-    Width = 774
+    Width = 508
     Height = 41
     Align = alTop
     TabOrder = 0
@@ -24,11 +25,12 @@ object frmPrincipal: TfrmPrincipal
   object PageControl1: TPageControl
     Left = 0
     Top = 41
-    Width = 774
+    Width = 508
     Height = 339
     ActivePage = TabSheet1
     Align = alClient
     TabOrder = 1
+    ExplicitWidth = 774
     object TabSheet1: TTabSheet
       Caption = 'Dashboard'
       object Label4: TLabel
@@ -72,11 +74,12 @@ object frmPrincipal: TfrmPrincipal
       object GroupBox2: TGroupBox
         Left = 0
         Top = 112
-        Width = 766
+        Width = 500
         Height = 197
         Align = alBottom
         Caption = ' GRUPO '
         TabOrder = 2
+        ExplicitWidth = 766
         object pnlMaisQuente: TPanel
           Left = 2
           Top = 17
@@ -154,7 +157,7 @@ object frmPrincipal: TfrmPrincipal
       Caption = 'Importar resultados'
       ImageIndex = 1
       object Panel2: TPanel
-        Left = 139
+        Left = 11
         Top = 149
         Width = 478
         Height = 115
@@ -182,7 +185,7 @@ object frmPrincipal: TfrmPrincipal
         end
       end
       object GroupBox1: TGroupBox
-        Left = 139
+        Left = 11
         Top = 38
         Width = 478
         Height = 105
