@@ -23,4 +23,9 @@ object dmPrincipal: TdmPrincipal
     Left = 166
     Top = 122
   end
+  object FDQueryAux: TFDQuery
+    Connection = FDConnection
+    Left = 240
+    Top = 128
+  end
 end
