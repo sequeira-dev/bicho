@@ -4,7 +4,7 @@ object frmPrincipal: TfrmPrincipal
   BorderIcons = [biSystemMenu, biMinimize]
   Caption = 'frmPrincipal'
   ClientHeight = 380
-  ClientWidth = 508
+  ClientWidth = 752
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -16,7 +16,7 @@ object frmPrincipal: TfrmPrincipal
   object Panel1: TPanel
     Left = 0
     Top = 0
-    Width = 508
+    Width = 752
     Height = 41
     Align = alTop
     TabOrder = 0
@@ -25,7 +25,7 @@ object frmPrincipal: TfrmPrincipal
   object PageControl1: TPageControl
     Left = 0
     Top = 41
-    Width = 508
+    Width = 752
     Height = 339
     ActivePage = TabSheet1
     Align = alClient
@@ -74,7 +74,7 @@ object frmPrincipal: TfrmPrincipal
       object GroupBox2: TGroupBox
         Left = 0
         Top = 112
-        Width = 500
+        Width = 744
         Height = 197
         Align = alBottom
         Caption = ' GRUPO '
@@ -131,6 +131,65 @@ object frmPrincipal: TfrmPrincipal
             ExplicitWidth = 76
           end
           object Memo2: TMemo
+            AlignWithMargins = True
+            Left = 4
+            Top = 25
+            Width = 177
+            Height = 149
+            Align = alClient
+            ScrollBars = ssVertical
+            TabOrder = 0
+          end
+        end
+        object pnlEsquentando: TPanel
+          Left = 372
+          Top = 17
+          Width = 185
+          Height = 178
+          Align = alLeft
+          TabOrder = 2
+          ExplicitLeft = 483
+          object Label6: TLabel
+            AlignWithMargins = True
+            Left = 4
+            Top = 4
+            Width = 177
+            Height = 15
+            Align = alTop
+            Caption = 'Os que est'#227'o ESQUENTANDO'
+            ExplicitWidth = 154
+          end
+          object Memo3: TMemo
+            AlignWithMargins = True
+            Left = 4
+            Top = 25
+            Width = 177
+            Height = 149
+            Align = alClient
+            ScrollBars = ssVertical
+            TabOrder = 0
+          end
+        end
+        object pnlEsfriando: TPanel
+          Left = 557
+          Top = 17
+          Width = 185
+          Height = 178
+          Align = alLeft
+          TabOrder = 3
+          ExplicitLeft = 668
+          ExplicitTop = 16
+          object Label7: TLabel
+            AlignWithMargins = True
+            Left = 4
+            Top = 4
+            Width = 177
+            Height = 15
+            Align = alTop
+            Caption = 'Os que est'#227'o ESFRIANDO'
+            ExplicitWidth = 133
+          end
+          object Memo4: TMemo
             AlignWithMargins = True
             Left = 4
             Top = 25

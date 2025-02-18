@@ -6,18 +6,17 @@ interface
   //Procedures
   procedure apagarUltimaDataResultado(pData: TDateTime);
   procedure incluirResultado(pData: TDateTime; pDescricao: String; pPremio1: Integer; pPremio2: Integer; pPremio3: Integer; pPremio4: Integer; pPremio5: Integer; pGrupo1: Integer; pGrupo2: Integer; pGrupo3: Integer; pGrupo4: Integer; pGrupo5: Integer);
-  function retornaNumerosMais(pDataInicio: TDateTime; pQtdNumero: Integer; pQuentes: Boolean):TArray<TArray<Integer>>;
+  function retornaNumerosMais(pDataInicio: TDateTime; pQtdNumero: Integer; pQuentes: Boolean; pIntermediarios: Boolean = false):TArray<TArray<Integer>>;
 implementation
 
 uses
   FireDAC.Comp.Client, uDmPrincipal, System.SysUtils, FireDAC.Stan.Param, Data.DB;
 
-function retornaNumerosMais(pDataInicio: TDateTime; pQtdNumero: Integer; pQuentes: Boolean):TArray<TArray<Integer>>;
+function retornaNumerosMais(pDataInicio: TDateTime; pQtdNumero: Integer; pQuentes: Boolean; pIntermediarios: Boolean):TArray<TArray<Integer>>;
 var
   FormatSettings: TFormatSettings;
-  i : Integer;
+  i, vMetadeResultados : Integer;
 begin
-
   FormatSettings := TFormatSettings.Create;
   FormatSettings.DateSeparator := '-';
   FormatSettings.ShortDateFormat := 'yyyy-mm-dd';
@@ -41,25 +40,46 @@ begin
     'select numero, count(*) as frequencia '+
     'from numeros_unificados '+
     'group by numero ';
+
     if pQuentes then
      FDQuery.SQL.Text := FDQuery.SQL.Text + ' order by frequencia desc '
     else
     FDQuery.SQL.Text := FDQuery.SQL.Text + ' order by frequencia asc ';
-    FDQuery.SQL.Text := FDQuery.SQL.Text + ' limit '+ IntToStr(pQtdNumero);
+
+    if pIntermediarios then
+      FDQuery.SQL.Text := FDQuery.SQL.Text + ' limit '+ IntToStr(pQtdNumero * 2)
+    else
+      FDQuery.SQL.Text := FDQuery.SQL.Text + ' limit '+ IntToStr(pQtdNumero);
 
     try
       FDQuery.Open;
 
-      for i := 0 to (pQtdNumero-1) do
+      if pIntermediarios then
       begin
-        Result[I][0] := FDQuery.FieldByName('numero').AsInteger;
-        Result[I][1] := FDQuery.FieldByName('frequencia').AsInteger;
-        FDQuery.Next;
+        vMetadeResultados := Trunc((pQtdNumero * 2)/2);
+        for i := 0 to ((FDQuery.RecordCount)-1) do
+        begin
+          if not(FDQuery.Eof) and (vMetadeResultados < FDQuery.RecNo) then
+          begin
+            Result[(i - Trunc(vMetadeResultados))][0] := FDQuery.FieldByName('numero').AsInteger;
+            Result[(I - Trunc(vMetadeResultados))][1] := FDQuery.FieldByName('frequencia').AsInteger;
+          end;
+          FDQuery.Next;
+        end;
+      end
+      else
+      begin
+        for i := 0 to ((FDQuery.RecordCount)-1) do
+        begin
+          Result[I][0] := FDQuery.FieldByName('numero').AsInteger;
+          Result[I][1] := FDQuery.FieldByName('frequencia').AsInteger;
+          FDQuery.Next;
+        end;
       end;
 
     except
       on e:Exception do
-      raise Exception.Create('Erro ao tentar excluir resultado. '+e.Message);
+      raise Exception.Create('Erro na retornaNumerosMais. '+e.Message);
     end;
   end;
 end;
@@ -143,6 +163,3 @@ end;
 
 
 end.
-
-
-

@@ -41,6 +41,12 @@ type
     Memo2: TMemo;
     SpinEdit1: TSpinEdit;
     Label5: TLabel;
+    pnlEsquentando: TPanel;
+    Label6: TLabel;
+    Memo3: TMemo;
+    pnlEsfriando: TPanel;
+    Label7: TLabel;
+    Memo4: TMemo;
     procedure btnImportarResultadosAPIClick(Sender: TObject);
     procedure TimerTimer(Sender: TObject);
     procedure BitBtn1Click(Sender: TObject);
@@ -69,6 +75,8 @@ var
 begin
   SetLength(vArray, strtoint(SpinEdit1.Text),2);
 
+
+  //MAIS QUENTES
   uUtil.copiarMatriz(uUtil.retornaNumerosMais(DateTimePicker1.Date,strtoint(SpinEdit1.Text),true),vArray);
 
   Memo1.Lines.Clear;
@@ -81,7 +89,8 @@ begin
     end;
   end;
 
-  vArray := uUtil.retornaNumerosMais(DateTimePicker1.Date,strtoint(SpinEdit1.Text),false);
+  //MAIS FRIOS
+  uUtil.copiarMatriz(uUtil.retornaNumerosMais(DateTimePicker1.Date,strtoint(SpinEdit1.Text),false),vArray);
 
   Memo2.Lines.Clear;
   for I := 0 to strtoint(SpinEdit1.Text)-1 do
@@ -90,6 +99,32 @@ begin
     begin
       if Grupos[j].Grupo = vArray[i][0] then
         Memo2.Lines.add(Grupos[j].Bicho + '(' + IntToStr(vArray[i][0]) +'), saiu x'+ IntToStr(vArray[i][1]));
+    end;
+  end;
+
+  //ESQUENTANDO
+  uUtil.copiarMatriz(uUtil.retornaNumerosMais(DateTimePicker1.Date,strtoint(SpinEdit1.Text),true,true),vArray);
+
+  Memo3.Lines.Clear;
+  for I := 0 to strtoint(SpinEdit1.Text)-1 do
+  begin
+    for j := low(Grupos) to High(Grupos) do
+    begin
+      if Grupos[j].Grupo = vArray[i][0] then
+        Memo3.Lines.add(Grupos[j].Bicho + '(' + IntToStr(vArray[i][0]) +'), saiu x'+ IntToStr(vArray[i][1]));
+    end;
+  end;
+
+  //ESFRIANDO
+  uUtil.copiarMatriz(uUtil.retornaNumerosMais(DateTimePicker1.Date,strtoint(SpinEdit1.Text),false,true),vArray);
+
+  Memo4.Lines.Clear;
+  for I := 0 to strtoint(SpinEdit1.Text)-1 do
+  begin
+    for j := low(Grupos) to High(Grupos) do
+    begin
+      if Grupos[j].Grupo = vArray[i][0] then
+        Memo4.Lines.add(Grupos[j].Bicho + '(' + IntToStr(vArray[i][0]) +'), saiu x'+ IntToStr(vArray[i][1]));
     end;
   end;
 end;

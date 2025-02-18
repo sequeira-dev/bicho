@@ -6,7 +6,7 @@ uses
   Vcl.Samples.Gauges, Vcl.StdCtrls;
 
 procedure importarResultados(pDataInicio: TDateTime; pImportarTudoEmDiante: Boolean = False; pGaugeRef: TGauge = nil; pMemoRef: TMemo = nil); // pImportarTudoEmDiante = Se sim, vai trazer tudo apartir da pDataInicio. Se não, apenas a pDataInicio
-function retornaNumerosMais(pDataInicio: TDateTime; pQtdNumero: Integer; pQuentes: Boolean):TArray<TArray<Integer>>;
+function retornaNumerosMais(pDataInicio: TDateTime; pQtdNumero: Integer; pQuentes: Boolean; pIntermediarios: Boolean = false):TArray<TArray<Integer>>;
 procedure copiarMatriz(const Origem: TArray<TArray<Integer>>; out Destino: TArray<TArray<Integer>>);
 
 implementation
@@ -42,9 +42,9 @@ begin
   end;
 end;
 
-function retornaNumerosMais(pDataInicio: TDateTime; pQtdNumero: Integer; pQuentes: Boolean):TArray<TArray<Integer>>;
+function retornaNumerosMais(pDataInicio: TDateTime; pQtdNumero: Integer; pQuentes: Boolean; pIntermediarios: Boolean):TArray<TArray<Integer>>;
 begin
-  Result := uUtilBanco.retornaNumerosMais(pDataInicio, pQtdNumero, pQuentes);
+  Result := uUtilBanco.retornaNumerosMais(pDataInicio, pQtdNumero, pQuentes, pIntermediarios);
 end;
 
 procedure importarResultados(pDataInicio: TDateTime; pImportarTudoEmDiante: Boolean; pGaugeRef: TGauge; pMemoRef: TMemo); // pImportarTudoEmDiante = Se sim, vai trazer tudo apartir da pDataInicio. Se não, apenas a pDataInicio
