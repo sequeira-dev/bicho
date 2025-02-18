@@ -26,24 +26,128 @@ object frmPrincipal: TfrmPrincipal
     Top = 41
     Width = 774
     Height = 339
-    ActivePage = TabSheet2
+    ActivePage = TabSheet1
     Align = alClient
     TabOrder = 1
-    ExplicitWidth = 937
     object TabSheet1: TTabSheet
-      Caption = 'Resultados'
-      object DBGrid1: TDBGrid
-        Left = 0
-        Top = 0
-        Width = 766
-        Height = 309
-        Align = alClient
+      Caption = 'Dashboard'
+      object Label4: TLabel
+        Left = 182
+        Top = 12
+        Width = 52
+        Height = 15
+        Caption = 'Apartir de'
+      end
+      object Label5: TLabel
+        Left = 182
+        Top = 62
+        Width = 107
+        Height = 15
+        Caption = 'Quantos n'#250'meros'
+      end
+      object DateTimePicker1: TDateTimePicker
+        Left = 182
+        Top = 33
+        Width = 99
+        Height = 23
+        Date = 45706.000000000000000000
+        Time = 0.592200451392273000
         TabOrder = 0
-        TitleFont.Charset = DEFAULT_CHARSET
-        TitleFont.Color = clWindowText
-        TitleFont.Height = -12
-        TitleFont.Name = 'Segoe UI'
-        TitleFont.Style = []
+      end
+      object BitBtn1: TBitBtn
+        Left = 3
+        Top = 12
+        Width = 173
+        Height = 94
+        Caption = 'Processar'
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clWindowText
+        Font.Height = -21
+        Font.Name = 'Segoe UI'
+        Font.Style = []
+        ParentFont = False
+        TabOrder = 1
+        OnClick = BitBtn1Click
+      end
+      object GroupBox2: TGroupBox
+        Left = 0
+        Top = 112
+        Width = 766
+        Height = 197
+        Align = alBottom
+        Caption = ' GRUPO '
+        TabOrder = 2
+        object pnlMaisQuente: TPanel
+          Left = 2
+          Top = 17
+          Width = 185
+          Height = 178
+          Align = alLeft
+          TabOrder = 0
+          ExplicitLeft = 72
+          ExplicitTop = 24
+          ExplicitHeight = 170
+          object Label2: TLabel
+            AlignWithMargins = True
+            Left = 4
+            Top = 4
+            Width = 177
+            Height = 15
+            Align = alTop
+            Caption = 'Os mais QUENTES'
+            ExplicitWidth = 95
+          end
+          object Memo1: TMemo
+            AlignWithMargins = True
+            Left = 4
+            Top = 25
+            Width = 177
+            Height = 149
+            Align = alClient
+            ScrollBars = ssVertical
+            TabOrder = 0
+          end
+        end
+        object pnlMaisFrios: TPanel
+          Left = 187
+          Top = 17
+          Width = 185
+          Height = 178
+          Align = alLeft
+          TabOrder = 1
+          ExplicitLeft = 442
+          ExplicitTop = 33
+          object Label3: TLabel
+            AlignWithMargins = True
+            Left = 4
+            Top = 4
+            Width = 177
+            Height = 15
+            Align = alTop
+            Caption = 'Os mais FRIOS'
+            ExplicitWidth = 76
+          end
+          object Memo2: TMemo
+            AlignWithMargins = True
+            Left = 4
+            Top = 25
+            Width = 177
+            Height = 149
+            Align = alClient
+            ScrollBars = ssVertical
+            TabOrder = 0
+          end
+        end
+      end
+      object SpinEdit1: TSpinEdit
+        Left = 182
+        Top = 82
+        Width = 52
+        Height = 24
+        MaxValue = 0
+        MinValue = 0
+        TabOrder = 3
+        Value = 0
       end
     end
     object TabSheet2: TTabSheet
@@ -117,7 +221,7 @@ object frmPrincipal: TfrmPrincipal
           Width = 129
           Height = 38
           Date = 45661.000000000000000000
-          Time = 0.581977870373521000
+          Time = 45661.000000000000000000
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clWindowText
           Font.Height = -21
@@ -146,10 +250,10 @@ object frmPrincipal: TfrmPrincipal
       end
     end
   end
-  object TimerImportacao: TTimer
+  object Timer: TTimer
     Interval = 60000
-    OnTimer = TimerImportacaoTimer
-    Left = 476
-    Top = 11
+    OnTimer = TimerTimer
+    Left = 444
+    Top = 65531
   end
 end

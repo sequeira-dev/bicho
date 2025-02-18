@@ -6,11 +6,64 @@ interface
   //Procedures
   procedure apagarUltimaDataResultado(pData: TDateTime);
   procedure incluirResultado(pData: TDateTime; pDescricao: String; pPremio1: Integer; pPremio2: Integer; pPremio3: Integer; pPremio4: Integer; pPremio5: Integer; pGrupo1: Integer; pGrupo2: Integer; pGrupo3: Integer; pGrupo4: Integer; pGrupo5: Integer);
-
+  function retornaNumerosMais(pDataInicio: TDateTime; pQtdNumero: Integer; pQuentes: Boolean):TArray<TArray<Integer>>;
 implementation
 
 uses
   FireDAC.Comp.Client, uDmPrincipal, System.SysUtils, FireDAC.Stan.Param, Data.DB;
+
+function retornaNumerosMais(pDataInicio: TDateTime; pQtdNumero: Integer; pQuentes: Boolean):TArray<TArray<Integer>>;
+var
+  FormatSettings: TFormatSettings;
+  i : Integer;
+begin
+
+  FormatSettings := TFormatSettings.Create;
+  FormatSettings.DateSeparator := '-';
+  FormatSettings.ShortDateFormat := 'yyyy-mm-dd';
+
+  SetLength(Result, pQtdNumero, 2);
+
+  with dmPrincipal do
+  begin
+    FDQuery.SQL.Text :=
+    '   with numeros_unificados as ( '+
+    '    select grupo1 as numero from resultado where data::date >= '+ QuotedStr(DateToStr(pDataInicio, FormatSettings)) +
+    '    union all  '+
+    '    select grupo2 from resultado where data::date >= '+ QuotedStr(DateToStr(pDataInicio, FormatSettings)) +
+    '    union all  '+
+    '    select grupo3 from resultado where data::date >=  '+ QuotedStr(DateToStr(pDataInicio, FormatSettings)) +
+    '    union all  '+
+    '    select grupo4 from resultado where data::date >=  '+ QuotedStr(DateToStr(pDataInicio, FormatSettings)) +
+    '    union all  '+
+    '    select grupo5 from resultado where data::date >=  '+ QuotedStr(DateToStr(pDataInicio, FormatSettings)) +
+    ') '+
+    'select numero, count(*) as frequencia '+
+    'from numeros_unificados '+
+    'group by numero ';
+    if pQuentes then
+     FDQuery.SQL.Text := FDQuery.SQL.Text + ' order by frequencia desc '
+    else
+    FDQuery.SQL.Text := FDQuery.SQL.Text + ' order by frequencia asc ';
+    FDQuery.SQL.Text := FDQuery.SQL.Text + ' limit '+ IntToStr(pQtdNumero);
+
+    try
+      FDQuery.Open;
+
+      for i := 0 to (pQtdNumero-1) do
+      begin
+        Result[I][0] := FDQuery.FieldByName('numero').AsInteger;
+        Result[I][1] := FDQuery.FieldByName('frequencia').AsInteger;
+        FDQuery.Next;
+      end;
+
+    except
+      on e:Exception do
+      raise Exception.Create('Erro ao tentar excluir resultado. '+e.Message);
+    end;
+  end;
+end;
+
 
 procedure apagarUltimaDataResultado(pData: TDateTime);
 var

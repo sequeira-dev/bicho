@@ -6,12 +6,46 @@ uses
   Vcl.Samples.Gauges, Vcl.StdCtrls;
 
 procedure importarResultados(pDataInicio: TDateTime; pImportarTudoEmDiante: Boolean = False; pGaugeRef: TGauge = nil; pMemoRef: TMemo = nil); // pImportarTudoEmDiante = Se sim, vai trazer tudo apartir da pDataInicio. Se não, apenas a pDataInicio
+function retornaNumerosMais(pDataInicio: TDateTime; pQtdNumero: Integer; pQuentes: Boolean):TArray<TArray<Integer>>;
+procedure copiarMatriz(const Origem: TArray<TArray<Integer>>; out Destino: TArray<TArray<Integer>>);
 
 implementation
 
 uses
   REST.Client, System.JSON, System.SysUtils, REST.Types, uUtilBanco,
   System.Generics.Collections, DateUtils ;
+
+
+procedure copiarMatriz(const Origem: TArray<TArray<Integer>>; out Destino: TArray<TArray<Integer>>);
+var
+  I, J: Integer;
+begin
+  // Ajusta o tamanho da matriz destino para ter o mesmo tamanho da origem
+  SetLength(Destino, Length(Origem));
+
+  // Para cada linha do array, limpamos as linhas
+  for I := 0 to High(Origem) do
+    SetLength(Destino[I], 0); // Limpa as linhas individuais
+
+  // Agora limpamos o array principal
+  SetLength(Destino, 0); // Limpa o array de linhas
+
+    // Ajusta o tamanho da matriz destino para ter o mesmo tamanho da origem
+  SetLength(Destino, Length(Origem));
+
+  for I := 0 to High(Origem) do
+  begin
+    SetLength(Destino[I], Length(Origem[I])); // Ajusta cada linha
+
+    for J := 0 to High(Origem[I]) do
+      Destino[I][J] := Origem[I][J]; // Copia elemento por elemento
+  end;
+end;
+
+function retornaNumerosMais(pDataInicio: TDateTime; pQtdNumero: Integer; pQuentes: Boolean):TArray<TArray<Integer>>;
+begin
+  Result := uUtilBanco.retornaNumerosMais(pDataInicio, pQtdNumero, pQuentes);
+end;
 
 procedure importarResultados(pDataInicio: TDateTime; pImportarTudoEmDiante: Boolean; pGaugeRef: TGauge; pMemoRef: TMemo); // pImportarTudoEmDiante = Se sim, vai trazer tudo apartir da pDataInicio. Se não, apenas a pDataInicio
 var
@@ -72,6 +106,7 @@ begin
       vRESTRequest.Client := vRESTClient;
       vRESTRequest.Response := vRESTResponse;
       vRESTRequest.Method := rmPOST;
+      vRESTRequest.HandleRedirects := False;
 
       vFormatSettings := TFormatSettings.Create;
       vFormatSettings.DateSeparator := '-';
@@ -96,9 +131,9 @@ begin
           // Adicionando JSON ao Body
           vRESTRequest.AddBody(vJSONEnvio.ToJSON, TRESTContentType.ctAPPLICATION_JSON);
 
-
-          // Executando a requisição
-          vRESTRequest.Execute;
+         // Executando a requisição
+         vRESTRequest.Execute;
+         //tratar erro 400 quando retornado
 
           // Pegando o retorno da API
           vRetornoTexto := vRESTResponse.Content;  // Retorno como string
@@ -207,8 +242,9 @@ begin
           Exit;
       end;
     except
-      on E: Exception do
-        raise Exception.Create('Erro ao tentar importar. ' + e.Message);
+
+    //  on E: Exception do
+    //    raise Exception.Create('Erro ao tentar importar. ' + e.Message);
     end;
   finally
     // Liberando memória

@@ -5,7 +5,8 @@ uses
   uFrmPrincipal in 'uFrmPrincipal.pas' {frmPrincipal},
   uUtilBanco in 'uUtilBanco.pas',
   uDmPrincipal in 'uDmPrincipal.pas' {dmPrincipal: TDataModule},
-  uUtil in 'uUtil.pas';
+  uUtil in 'uUtil.pas',
+  uConstantes in 'uConstantes.pas';
 
 {$R *.res}
 
